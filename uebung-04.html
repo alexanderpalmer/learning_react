@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehrere Komponenten in React</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        // Header-Komponente (nur Darstellung)
+        function Header({ title }) {
+            return <h1>{title}</h1>
+        }
+
+        // Counter-Komponente (interaktiv)
+        function Counter({ value, onIncrement, onDecrement }) {
+            return (
+                <div>
+                    <p>Zähler: {value}</p>
+                    <button onClick={onIncrement}>+1</button>
+                    <button onClick={onDecrement}>-1</button>
+                </div>
+            );
+        }
+
+        // Footer-Komponente
+        function Footer({ text }) {
+            return <footer>{text}</footer>
+        }
+
+        // Haupt-App Komponente
+        function App() {
+            // Hier wird der State in an einer zentralen Stelle abgelegt und nicht
+            // wie im letzten Beispiel in einer Komponente
+            const [count, setCount] = React.useState(0);
+
+            // Callback-Funktionen, die dem Counter übergeben werden
+            const handleIncrement = () => setCount(c => c + 1);
+            const handleDecrement = () => setCount(c => Math.max(0, c - 1));
+            return (
+                <div>
+                    <Header title="Meine kleine React-App" />
+                    <Counter
+                        value={count}
+                        onIncrement={handleIncrement}
+                        onDecrement={handleDecrement}
+                    />
+
+                    <Counter
+                        value={count}
+                        onIncrement={handleIncrement}
+                        onDecrement={handleDecrement}
+                    />
+                    <Footer text="&copy; 2025 Meine App" />
+                </div>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />)
+    </script>
+
+</body>
+
+</html>
