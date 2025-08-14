@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meine erste React-Seite</title>
+</head>
+
+<body>
+    <div id="root"></div> <!-- Hier kommt React rein -->
+
+    <!-- React und ReactDOM von einem CDN laden -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Babel für JSX-Übersetzung im Browser (nur zu Lernzwecken) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Unser eigenes React-Skript -->
+    <script type="text/babel">
+        function App() {
+            return <h1>Hallo React!</h1>;
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meine erste React-Seite</title>
+</head>
+
+<body>
+    <div id="root"></div> <!-- Hier kommt React rein -->
+
+    <!-- React und ReactDOM von einem CDN laden -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Babel für JSX-Übersetzung im Browser (nur zu Lernzwecken) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Unser eigenes React-Skript -->
+    <script type="text/babel">
+        function App() {
+            const [count, setCount] = React.useState(0);
+            // Zu beachten gilt das Minusrechnen. Hier wird count nicht direkt manipuliert, sondern
+            // mittels einer Callback-Funktion c=> Math.max(...) aktualisiert. Somit wird verhindert,
+            // das beim schnellen Klicken auf den Minus-Button der Wert korrekt aktualisiert wird.
+            return (
+                <div>
+                    <h1>Zähler: {count}</h1>
+                    <button onClick={() => setCount(count + 1)}>+1</button>
+                    <button onClick={() => setCount(c => Math.max(0, c - 1))}>-1</button>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

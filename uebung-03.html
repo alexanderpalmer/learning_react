@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehrere Komponenten in React</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        // Header-Komponente (nur Darstellung)
+        function Header({ title }) {
+            return <h1>{title}</h1>
+        }
+
+        // Counter-Komponente (interaktiv)
+        function Counter({ initial }) {
+            // Ein State
+            const [count, setCount] = React.useState(initial);
+
+            return (
+                <div>
+                    <p>Zähler: {count}</p>
+                    <button onClick={() => setCount(c => c + 1)}>+1</button>
+                    <button onClick={() => setCount(c => c - 1)}>-1</button>
+                </div>
+            );
+        }
+
+        // Footer-Komponente
+        function Footer({ text }) {
+            return <footer>{text}</footer>
+        }
+
+        // Haupt-App Komponente
+        function App() {
+            return (
+                <div>
+                    <Header title="Meine kleine React-App" />
+                    <Counter initial={0} />
+                    <Footer text="&copy; 2025 Meine App" />
+                </div>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />)
+    </script>
+
+</body>
+
+</html>
