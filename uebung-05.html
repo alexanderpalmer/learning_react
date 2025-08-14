@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zwei Counter – gemeinsamer State</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel (nur für Lernen/JSX im Browser) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        // Presentational/Controlled Component:
+        // - bekommt value (Anzeige)
+        // - bekommt onIncrement/onDecrement (Events nach oben)
+        function Counter({ label, value, onChange }) {
+            return (
+                <section style={{ border: "1px solid #ccc", padding: 12, marginBottom: 8 }}>
+                    <h2>{label}</h2>
+                    <p>Zähler: {value}</p>
+                    <button onClick={() => onChange(+1)}>+1</button>
+                    <button onClick={() => onChange(+10)}>+10</button>
+                    <button onClick={() => onChange(-1)} disabled={value === 0}>-1</button>
+                </section>
+            );
+        }
+
+        function App() {
+            // Zentrale Quelle, der State lebt hier
+            const [count, setCount] = React.useState(0);
+
+            // Callback, der nach unten gereicht wird:
+            const changeBy = (delta) => setCount(c => Math.max(0, c + delta));
+
+            return (
+                <main>
+                    <h1>Gemeinsamer State in App</h1>
+                    {/* Beide Counter zeigen denselben Wert und rufen dieselben Callbacks */}
+                    <Counter label="Counter A" value={count} onChange={changeBy} />
+                    <Counter label="Counter B" value={count} onChange={changeBy} />
+
+                    <hr />
+                    <p><strong>Gesamtwert:</strong> {count}</p>
+                    {/* Reset-Knopf demonstriert: Parent ändert State und alle Kinder aktualisieren */}
+                    <button onClick={() => setCount(0)}>Reset auf 0</button>
+                </main>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />)
+    </script>
+
+</body>
+
+</html>
